@@ -40,27 +40,4 @@ export const { handlers, auth, signIn, signOut } = NextAuth({
       },
     }),
   ],
-  callbacks: {
-    ...authConfig.callbacks,
-    async jwt({ token, user }) {
-      if (user) {
-        token.role = user.role;
-        token.employeeId = user.employeeId;
-        token.employeeRecordId = user.employeeRecordId;
-        token.uid = user.id;
-        token.verified = user.verified;
-      }
-      return token;
-    },
-    async session({ session, token }) {
-      if (session.user) {
-        session.user.id = token.uid as string;
-        session.user.role = token.role as "EMPLOYEE" | "HR" | "ADMIN";
-        session.user.employeeId = token.employeeId as string;
-        session.user.employeeRecordId = token.employeeRecordId as string | null;
-        session.user.verified = token.verified as boolean;
-      }
-      return session;
-    },
-  },
 });
