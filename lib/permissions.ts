@@ -8,7 +8,7 @@ export type SessionUser = {
   role: "EMPLOYEE" | "HR" | "ADMIN";
   employeeId: string;
   employeeRecordId: string | null;
-  emailVerified: boolean;
+  verified: boolean;
   email: string;
   name: string;
 };

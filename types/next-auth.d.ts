@@ -6,7 +6,9 @@ declare module "next-auth" {
     role: Role;
     employeeId: string;
     employeeRecordId: string | null;
-    emailVerified: boolean;
+    // Named "verified" (not "emailVerified") to avoid colliding with the
+    // built-in AdapterUser.emailVerified: Date | null field.
+    verified: boolean;
   }
 
   interface Session {
@@ -15,7 +17,7 @@ declare module "next-auth" {
       role: Role;
       employeeId: string;
       employeeRecordId: string | null;
-      emailVerified: boolean;
+      verified: boolean;
     } & DefaultSession["user"];
   }
 }
@@ -26,6 +28,6 @@ declare module "next-auth/jwt" {
     role: Role;
     employeeId: string;
     employeeRecordId: string | null;
-    emailVerified: boolean;
+    verified: boolean;
   }
 }

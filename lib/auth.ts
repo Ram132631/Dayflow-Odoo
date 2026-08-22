@@ -35,7 +35,7 @@ export const { handlers, auth, signIn, signOut } = NextAuth({
           role: user.role,
           employeeId: user.employeeId,
           employeeRecordId: user.employee?.id ?? null,
-          emailVerified: !!user.emailVerified,
+          verified: !!user.emailVerified,
         };
       },
     }),
@@ -48,7 +48,7 @@ export const { handlers, auth, signIn, signOut } = NextAuth({
         token.employeeId = user.employeeId;
         token.employeeRecordId = user.employeeRecordId;
         token.uid = user.id;
-        token.emailVerified = user.emailVerified;
+        token.verified = user.verified;
       }
       return token;
     },
@@ -58,7 +58,7 @@ export const { handlers, auth, signIn, signOut } = NextAuth({
         session.user.role = token.role as "EMPLOYEE" | "HR" | "ADMIN";
         session.user.employeeId = token.employeeId as string;
         session.user.employeeRecordId = token.employeeRecordId as string | null;
-        session.user.emailVerified = token.emailVerified as boolean;
+        session.user.verified = token.verified as boolean;
       }
       return session;
     },

@@ -6,7 +6,7 @@ export default async function AuthLayout({ children }: { children: React.ReactNo
   const session = await auth();
   // Only bounce fully-verified sessions away — an authenticated-but-unverified
   // user must still be able to reach /verify-email without looping back here.
-  if (session?.user?.emailVerified) {
+  if (session?.user?.verified) {
     redirect(isAdminRole(session.user.role) ? "/admin/dashboard" : "/dashboard");
   }
 

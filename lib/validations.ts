@@ -22,7 +22,7 @@ export const registerSchema = z
     confirmPassword: z.string(),
     // Publicly submitted role is advisory only — the server always creates
     // new self-registered accounts as EMPLOYEE. See app/(auth)/register/actions.ts.
-    role: z.enum(["EMPLOYEE", "HR", "ADMIN"]).default("EMPLOYEE"),
+    role: z.enum(["EMPLOYEE", "HR", "ADMIN"]),
   })
   .refine((data) => data.password === data.confirmPassword, {
     message: "Passwords do not match",
@@ -63,7 +63,7 @@ export const employeeAdminUpdateSchema = z.object({
   address: z.string().trim().max(300).optional().or(z.literal("")),
   department: z.string().trim().min(1, "Department is required").max(100),
   position: z.string().trim().min(1, "Position is required").max(100),
-  joiningDate: z.coerce.date({ error: "Enter a valid joining date" }),
+  joiningDate: z.date({ error: "Enter a valid joining date" }),
   role: z.enum(["EMPLOYEE", "HR", "ADMIN"]),
 });
 
@@ -79,8 +79,8 @@ export const attendanceFilterSchema = z.object({
 export const leaveApplySchema = z
   .object({
     leaveType: z.enum(["PAID", "SICK", "UNPAID"]),
-    startDate: z.coerce.date({ error: "Start date is required" }),
-    endDate: z.coerce.date({ error: "End date is required" }),
+    startDate: z.date({ error: "Start date is required" }),
+    endDate: z.date({ error: "End date is required" }),
     remarks: z.string().trim().max(500).optional().or(z.literal("")),
   })
   .refine((data) => data.endDate >= data.startDate, {
@@ -100,10 +100,10 @@ export type LeaveDecisionInput = z.infer<typeof leaveDecisionSchema>;
 
 export const payrollUpsertSchema = z.object({
   employeeId: z.string().min(1),
-  basicSalary: z.coerce.number().nonnegative("Basic salary cannot be negative"),
-  allowances: z.coerce.number().nonnegative("Allowances cannot be negative"),
-  deductions: z.coerce.number().nonnegative("Deductions cannot be negative"),
-  effectiveDate: z.coerce.date({ error: "Enter a valid effective date" }),
+  basicSalary: z.number().nonnegative("Basic salary cannot be negative"),
+  allowances: z.number().nonnegative("Allowances cannot be negative"),
+  deductions: z.number().nonnegative("Deductions cannot be negative"),
+  effectiveDate: z.date({ error: "Enter a valid effective date" }),
 });
 
 export type PayrollUpsertInput = z.infer<typeof payrollUpsertSchema>;
